@@ -1,0 +1,34 @@
+{
+  "name": "cs2-hud-mltoo",
+  "version": "1.0.0",
+  "description": "A simple HUD for CS2",
+  "source": "src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mltoo/CS2Hud.git"
+  },
+  "author": "Alexander Thomas",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mltoo/CS2Hud/issues"
+  },
+  "homepage": "https://github.com/mltoo/CS2Hud#readme",
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "parcel": "^2.12.0",
+    "postcss": "^8.4.35",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "socket.io-client": "^4.7.4",
+    "typescript": "^5.3.3"
+  }
+}

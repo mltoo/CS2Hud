@@ -1,0 +1,56 @@
+import React, { useState, useEffect } from 'react';
+import { io } from "socket.io-client";
+console.log("hello");
+const socket = io("http://localhost:42069");
+
+export function App() {
+    const [gsiData, setGSIData] = React.useState({} as Object);
+
+    useEffect(() => {
+        function onConnect() {
+            console.log("connected!");
+        }
+
+        function onDisconnect() {
+            console.log("disconnected!");
+        }
+
+        function onEvent(value) {
+            console.log("VALUE RECEIVED str: " + value);
+            console.log(JSON.parse(value));
+            setGSIData(JSON.parse(value));
+        }
+        console.log("HERE");
+        socket.on('connect', onConnect);
+        socket.on('disconnect', onDisconnect);
+        socket.onAny(onEvent);
+
+        return () => {
+            socket.off('connect', onConnect);
+            socket.off('disconnect', onDisconnect);
+            socket.offAny(onEvent);
+        }
+
+    }, []);
+    let ts: Object[] = []
+    let cts: Object[] = []
+    if (gsiData.hasOwnProperty("allplayers")) {
+        const allPlayerData: Object = gsiData["allplayers"]
+        ts = Object.values(allPlayerData).filter((player) => player.team == "T");
+        cts = Object.values(allPlayerData).filter((player) => player.team == "CT");
+    }
+    console.log(ts);
+    console.log(cts);
+    return <div className="flex w-screen justify-between content-center px-5 absolute bottom-20">
+        <div>
+            {ts.map((player: any) =>
+                <h1 className="my-1 p-3 pr-20 bg-gray-500">{player.name} K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths}</h1>
+            )}
+        </div>
+        <div className='text-right'>
+            {cts.map((player: any)=>
+                <h1 className="my-1 p-3 pl-20 bg-gray-500">K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths} {player.name}</h1>
+            )}
+        </div>
+    </div>;
+}
