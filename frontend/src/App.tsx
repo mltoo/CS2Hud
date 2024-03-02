@@ -44,12 +44,12 @@ export function App() {
     return <div className="flex w-screen justify-between content-center px-5 absolute bottom-20">
         <div>
             {ts.map((player: any) =>
-                <h1 className="my-1 p-3 pr-20 bg-gray-500">{player.name} K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths}</h1>
+                <h1 className="my-1 p-3 pr-20 bg-southLanPurple">{player.name} K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths}</h1>
             )}
         </div>
         <div className='text-right'>
             {cts.map((player: any)=>
-                <h1 className="my-1 p-3 pl-20 bg-gray-500">K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths} {player.name}</h1>
+                <h1 className="my-1 p-3 pl-20 bg-southLanGreen">K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths} {player.name}</h1>
             )}
         </div>
     </div>;
