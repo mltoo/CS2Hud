@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { TopDevice } from './TopDevice';
 import { io } from "socket.io-client";
 console.log("hello");
 const socket = io("http://localhost:42069");
@@ -41,16 +42,19 @@ export function App() {
     }
     console.log(ts);
     console.log(cts);
-    return <div className="flex w-screen justify-between content-center px-5 absolute bottom-20">
-        <div>
-            {ts.map((player: any) =>
-                <h1 className="my-1 p-3 pr-20 bg-southLanPurple">{player.name} K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths}</h1>
-            )}
+    return <React.Fragment>
+        <TopDevice data={gsiData["map"]} phaseCountdowns={gsiData["phase_countdowns"]}/>
+        <div className="flex w-screen justify-between content-center px-5 absolute bottom-20">
+            <div>
+                {ts.map((player: any) =>
+                    <h1 className="my-1 p-3 pr-20 bg-southLanPurple">{player.name} K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths}</h1>
+                )}
+            </div>
+            <div className='text-right'>
+                {cts.map((player: any) =>
+                    <h1 className="my-1 p-3 pl-20 bg-southLanGreen">K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths} {player.name}</h1>
+                )}
+            </div>
         </div>
-        <div className='text-right'>
-            {cts.map((player: any)=>
-                <h1 className="my-1 p-3 pl-20 bg-southLanGreen">K: {player.match_stats.kills} A: {player.match_stats.assists} D: {player.match_stats.deaths} {player.name}</h1>
-            )}
-        </div>
-    </div>;
+    </React.Fragment>;
 }
