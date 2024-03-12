@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import logo from 'url:../res/logo.svg';
 
 export function TopDevice(props) {
+    let test:any = logo as any;
     let ctName = "Counter-Terrorists";
     let tName = "Terrorists";
     let ctScore = 0;
@@ -49,37 +51,37 @@ export function TopDevice(props) {
                     fill="url(#grad1)"
                     stroke-width="0.265"
                     stroke-dasharray="none"
-                    d="m 160.07292,62.177083 -35.99921,67.468747 h 300 V 62.177083 Z"
+                    d="m 153.07292,72.177083 -35.99921,67.468747 h 300 V 72.177083 Z"
                     id="path1"
                 />
                 <path
                     className='fill-southLanGreen'
                     stroke-width="0.265"
                     stroke-dasharray="none"
-                    d="m 159,62 -36,68 h 12 l 36,-68 Z"
+                    d="m 152,72 -36,68 h 12 l 36,-68 Z"
                     id="path1"
                 />
                 <path
                     fill="url(#grad2)"
                     stroke-width="0.265"
                     stroke-dasharray="none"
-                    d="m -16.93,62.177083 35.99921,67.468747 h -300 V 62.177083 Z"
+                    d="m -8.93,72.177083 35.99921,67.468747 h -300 V 72.177083 Z"
                     id="path1"
                 />
                 <path
                     className='fill-southLanPurple'
                     stroke-width="0.265"
                     stroke-dasharray="none"
-                    d="m -15,62 36,68 h -12 l -36,-68 Z"
+                    d="m -8,72 36,68 h -12 l -36,-68 Z"
                     id="path1"
                 />
-                <text dominantBaseline="central" x="180" y="94" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{ctName}</text>
-                <text dominantBaseline="central" x="77.5" y="94" className="font-sans font-bold text-4xl fill-southLanGreen drop-shadow-lg">{ctScore}</text>
-                <text dominantBaseline="central" textAnchor="end" x="-25" y="94" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{tName}</text>
-                <text dominantBaseline="central" textAnchor="end" x="65.5" y="94" className="font-sans font-bold text-4xl fill-southLanPurple drop-shadow-lg">{tScore}</text>
-                <text dominantBaseline="central" textAnchor='middle' x="71.5" y="44" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{timer}</text>
+                <text dominantBaseline="central" x="180" y="103" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{ctName}</text>
+                <text dominantBaseline="central" x="77.5" y="105" className="font-sans font-bold text-4xl fill-southLanGreen drop-shadow-lg">{ctScore}</text>
+                <text dominantBaseline="central" textAnchor="end" x="-25" y="103" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{tName}</text>
+                <text dominantBaseline="central" textAnchor="end" x="65.5" y="105" className="font-sans font-bold text-4xl fill-southLanPurple drop-shadow-lg">{tScore}</text>
+                <text dominantBaseline="central" textAnchor='middle' x="71.5" y="58" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{timer}</text>
+                <image x="71.5" y="8" width="80" className="" transform='translate(-40,0)' xlinkHref={logo}/>
             </g>
         </svg>
-
     </div>;
 }
