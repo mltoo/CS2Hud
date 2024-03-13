@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { HealthBar } from './HealthBar';
 
 export function PlayerBar(props) {
     const player = props.data;
@@ -8,7 +9,6 @@ export function PlayerBar(props) {
     const barPadding = 8;
     const barLength = 350;
     const totalBarLength = barLength + Math.abs(dydx * barHeight);
-    console.log(dydx);
 
     return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5), marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5), marginBottom: barPadding, height: barHeight, width: totalBarLength }} className={player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}>
         <svg
@@ -42,6 +42,9 @@ export function PlayerBar(props) {
                 />
             </g>
         </svg>
+        <div className="absolute" style={{height: barHeight, width: totalBarLength }}>
+            <HealthBar className="" style={{position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 30, left: dydx < 0 ? undefined : 30}} data={props.data}/>
+        </div>
         <div className={(dydx > 0 ? "text-left ml-14" : "text-right mr-14") + " text-2xl mt-1.5 font-bold text-white z-20"}>{player.name}</div>
     </div>;
 }
