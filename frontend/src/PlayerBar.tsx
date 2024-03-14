@@ -74,6 +74,13 @@ export function PlayerBar(props) {
                         + " l " + -dydx * barHeight + " " + barHeight
                         + " Z"}
                 />
+                <circle
+                    cy={barHeight/2}
+                    cx={(barHeight/2)*dydx + 6 * Math.sign(dydx)}
+                    r="12"
+                    className={`stroke-[5px] ${dydx > 0 ? "stroke-southLanGreen" : "stroke-southLanPurple"} fill-black`}
+                    />
+                <text x={(barHeight/2)*dydx + 6 * Math.sign(dydx)} y={barHeight/2} textAnchor='middle' dominantBaseline='middle' className='font-black translate-y-[1.5px] fill-white'>{player.observer_slot}</text>
             </g>
         </svg>
         <div className="absolute" style={{ height: barHeight, width: totalBarLength }}>
