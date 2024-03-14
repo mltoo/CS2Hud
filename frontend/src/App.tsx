@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { TopDevice } from './TopDevice';
 import { io } from "socket.io-client";
 import { PlayerStats } from './PlayerStats';
-console.log("hello");
 const socket = io("http://localhost:42069");
 
 export function App() {
@@ -18,11 +17,10 @@ export function App() {
         }
 
         function onEvent(value) {
-            console.log("VALUE RECEIVED str: " + value);
+            //console.log("VALUE RECEIVED str: " + value);
             console.log(JSON.parse(value));
             setGSIData(JSON.parse(value));
         }
-        console.log("HERE");
         socket.on('connect', onConnect);
         socket.on('disconnect', onDisconnect);
         socket.onAny(onEvent);
@@ -41,8 +39,8 @@ export function App() {
         ts = Object.values(allPlayerData).filter((player) => player.team == "T");
         cts = Object.values(allPlayerData).filter((player) => player.team == "CT");
     }
-    console.log(ts);
-    console.log(cts);
+    //console.log(ts);
+    //console.log(cts);
     return <React.Fragment>
         <TopDevice data={gsiData["map"]} phaseCountdowns={gsiData["phase_countdowns"]}/>
         <PlayerStats data={gsiData["allplayers"]}/>

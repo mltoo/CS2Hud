@@ -15,7 +15,7 @@ export function TopDevice(props) {
         tName = props.data.team_t.name ?? tName;
         tScore = props.data.team_t.score;
     }
-    console.log(props);
+    //console.log(props);
     if (props.phaseCountdowns) {
         const mins = Math.floor(props.phaseCountdowns.phase_ends_in / 60);
         const secs = String(Math.round(props.phaseCountdowns.phase_ends_in % 60));
