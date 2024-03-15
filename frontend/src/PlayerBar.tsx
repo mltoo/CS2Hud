@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HealthBar } from './HealthBar';
+import '../svgImport.d';
 import * as weaponIcons from "url:../res/weapons/*.svg";
 
 export function PlayerBar(props) {
@@ -9,6 +10,7 @@ export function PlayerBar(props) {
     const barHeight = 80;
     const barPadding = 8;
     const barLength = 350;
+    const deathOffset = player.state.health === 0 ? 100 : 0;
     const totalBarLength = barLength + Math.abs(dydx * barHeight);
     let bigGun: any = undefined;
     let pistol: any = undefined;
@@ -44,7 +46,12 @@ export function PlayerBar(props) {
     bigGun && pistol && offhandInventoryIcons.push(weaponToIcon(pistol));
     console.log(offhandInventoryIcons);
 
-    return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5), marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5), marginBottom: barPadding, height: barHeight, width: totalBarLength }} className={player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}>
+    const strokeAccentColour = player.state.health === 0 ? "stroke-gray-500" : dydx > 0 ? "stroke-southLanGreen" : "stroke-southLanPurple";
+    const fillAccentColour = player.state.health === 0 ? "fill-gray-500" : dydx > 0 ? "fill-southLanGreen" : "fill-southLanPurple";
+    const gradientBaseColour = player.state.health == 0 ? "rgb(140 140 140)" : hasBomb ? "red" : "black";
+    console.log(gradientBaseColour);
+
+    return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5) - deathOffset, marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5) - deathOffset, marginBottom: barPadding, height: barHeight, width: totalBarLength, transform:`translate(-400,0)` }} className={player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}>
         <svg
             className='absolute -z-10'
             height={barHeight}
@@ -52,8 +59,8 @@ export function PlayerBar(props) {
         >
             <defs id="defs1">
                 <linearGradient id={"playerbar-grad" + player.observer_slot}>
-                    <stop stopColor={hasBomb ? 'red' : 'black'} stopOpacity={dydx > 0 ? 100 : 0} offset="0%" />
-                    <stop stopColor={hasBomb ? 'red' : 'black'} stopOpacity={dydx > 0 ? 0 : 100} offset="100%" />
+                    <stop stopColor={gradientBaseColour} stopOpacity={dydx > 0 ? 100 : 0} offset="0%" />
+                    <stop stopColor={gradientBaseColour} stopOpacity={dydx > 0 ? 0 : 100} offset="100%" />
                 </linearGradient>
             </defs>
             <g id="layer1">
@@ -67,7 +74,7 @@ export function PlayerBar(props) {
                         + " Z"}
                 />
                 <path
-                    className={dydx > 0 ? 'fill-southLanGreen' : 'fill-southLanPurple'}
+                    className={fillAccentColour}
                     d={"m 0 " + barHeight +
                         " " + dydx * barHeight + " " + -barHeight
                         + " h " + 12 * Math.sign(dydx)
@@ -78,7 +85,7 @@ export function PlayerBar(props) {
                     cy={barHeight/2}
                     cx={(barHeight/2)*dydx + 6 * Math.sign(dydx)}
                     r="12"
-                    className={`stroke-[5px] ${dydx > 0 ? "stroke-southLanGreen" : "stroke-southLanPurple"} fill-black`}
+                    className={`stroke-[5px] ${strokeAccentColour} fill-black`}
                     />
                 <text x={(barHeight/2)*dydx + 6 * Math.sign(dydx)} y={barHeight/2} textAnchor='middle' dominantBaseline='middle' className='font-black translate-y-[1.5px] fill-white'>{player.observer_slot}</text>
             </g>
@@ -97,11 +104,11 @@ export function PlayerBar(props) {
                     <span className="text-xs mx-1.5 font-normal">A</span>{player.match_stats.assists}
                 </div>
                 <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{}}>
-                    <span className={`text-xs ${dydx > 0 ? "pl-2.5 mr-1.5" : "pr-2.5 ml-1.5"} font-normal`}>D</span>{player.match_stats.deaths}
+                    <span className={`text-xs ${dydx > 0 ? "pl-3.5 mr-1.5" : "pr-3.5 ml-1.5"} font-normal`}>D</span>{player.match_stats.deaths}
                 </div>
             </div>
         </div>
-        <div className={(dydx > 0 ? "text-left ml-[5.3rem]" : "text-right mr-[5.3rem]") + " text-2xl mt-1.5 font-bold text-white z-20"}>{player.name}</div>
+        <div className={(dydx > 0 ? "text-left ml-[5.5rem]" : "text-right mr-[5.5rem]") + " text-2xl mt-1.5 font-bold text-white z-20"}>{player.name}</div>
     </div>;
 }
 
