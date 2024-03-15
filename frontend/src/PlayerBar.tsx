@@ -84,13 +84,24 @@ export function PlayerBar(props) {
             </g>
         </svg>
         <div className="absolute" style={{ height: barHeight, width: totalBarLength }}>
-            <HealthBar className="" style={{ position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 30, left: dydx < 0 ? undefined : 30 }} data={props.data} />
+            <HealthBar className="" style={{ position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 75, left: dydx < 0 ? undefined : 75 }} data={props.data} />
             <img className={`invert opacity-80 drop-shadow-lg absolute ${dydx > 0 ? "-scale-x-100 left-0 -translate-x-full" : "right-0 translate-x-full"}`} style={{height: barHeight * 2/3}} src={weaponToIcon(primary)}/>
             <div className={`absolute w-full flex ${dydx > 0 ? "-scale-x-100 -left-2 -translate-x-full" : "-right-2 translate-x-full"}`} style={{top: barHeight*2/3}}>
                 {offhandInventoryIcons.map(icon => <img className="invert px-0.5 opacity-80" style={{height: barHeight/3}} src={icon}/>)}
             </div>
+            <div className={`text-white py-2 grid grid-cols-1 flex-col items-stretch absolute ${dydx > 0 ? "left-6" : "right-6 justify-items-end"}`} style={{height: barHeight}}>
+                <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{marginLeft: Math.abs(dydx*barHeight*3/4), marginRight:Math.abs(dydx*barHeight*3/4)}}>
+                    <span className="text-xs mx-1.5 font-normal">K</span>{player.match_stats.kills}
+                </div>
+                <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{marginLeft: Math.abs(dydx*barHeight/2), marginRight: Math.abs(dydx*barHeight/2)}}>
+                    <span className="text-xs mx-1.5 font-normal">A</span>{player.match_stats.assists}
+                </div>
+                <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{}}>
+                    <span className={`text-xs ${dydx > 0 ? "pl-2.5 mr-1.5" : "pr-2.5 ml-1.5"} font-normal`}>D</span>{player.match_stats.deaths}
+                </div>
+            </div>
         </div>
-        <div className={(dydx > 0 ? "text-left ml-14" : "text-right mr-14") + " text-2xl mt-1.5 font-bold text-white z-20"}>{player.name}</div>
+        <div className={(dydx > 0 ? "text-left ml-[5.3rem]" : "text-right mr-[5.3rem]") + " text-2xl mt-1.5 font-bold text-white z-20"}>{player.name}</div>
     </div>;
 }
 

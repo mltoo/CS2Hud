@@ -5,7 +5,7 @@ export function HealthBar(props) {
     const dydx = 0.37388513540873675 * (player.observer_slot >= 5 ? 1 : -1);
     const dxdy = 1 / dydx;
     const barHeight = 15;
-    const barLength = 300;
+    const barLength = 280;
     const numSegments = 4;
     const segmentPadding = 3;
     const segmentLength = (barLength - (numSegments - 1) * segmentPadding - Math.abs(dydx)*barHeight) / numSegments;
