@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HealthBar } from './HealthBar';
 import '../svgImport.d';
 import * as weaponIcons from "url:../res/weapons/*.svg";
+import * as generalIcons from "url:../res/icons/*.svg";
 
 export function PlayerBar(props) {
     const player = props.data;
@@ -29,7 +30,7 @@ export function PlayerBar(props) {
         } else if (weaponType === "Knife") {
             knife = player.weapons[weapon];
         } else if (weaponType === "C4") {
-            hasBomb = true; 
+            hasBomb = true;
         } else if (weaponType === "Grenade") {
             grenades.push(player.weapons[weapon]);
         }
@@ -51,7 +52,7 @@ export function PlayerBar(props) {
     const gradientBaseColour = player.state.health == 0 ? "rgb(140 140 140)" : hasBomb ? "red" : "black";
     console.log(gradientBaseColour);
 
-    return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5) - deathOffset, marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5) - deathOffset, marginBottom: barPadding, height: barHeight, width: totalBarLength, transform:`translate(-400,0)` }} className={player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}>
+    return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5) - deathOffset, marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5) - deathOffset, marginBottom: barPadding, height: barHeight, width: totalBarLength, transform: `translate(-400,0)` }} className={player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}>
         <svg
             className='absolute -z-10'
             height={barHeight}
@@ -82,25 +83,40 @@ export function PlayerBar(props) {
                         + " Z"}
                 />
                 <circle
-                    cy={barHeight/2}
-                    cx={(barHeight/2)*dydx + 6 * Math.sign(dydx)}
+                    cy={barHeight / 2}
+                    cx={(barHeight / 2) * dydx + 6 * Math.sign(dydx)}
                     r="12"
                     className={`stroke-[5px] ${strokeAccentColour} fill-black`}
-                    />
-                <text x={(barHeight/2)*dydx + 6 * Math.sign(dydx)} y={barHeight/2} textAnchor='middle' dominantBaseline='middle' className='font-black translate-y-[1.5px] fill-white'>{player.observer_slot}</text>
+                />
+                <text x={(barHeight / 2) * dydx + 6 * Math.sign(dydx)} y={barHeight / 2} textAnchor='middle' dominantBaseline='middle' className='font-black translate-y-[1.5px] fill-white'>{player.observer_slot}</text>
             </g>
         </svg>
         <div className="absolute" style={{ height: barHeight, width: totalBarLength }}>
-            <HealthBar className="" style={{ position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 75, left: dydx < 0 ? undefined : 75 }} data={props.data} />
-            <img className={`invert opacity-80 drop-shadow-lg absolute ${dydx > 0 ? "-scale-x-100 left-0 -translate-x-full" : "right-0 translate-x-full"}`} style={{height: barHeight * 2/3}} src={weaponToIcon(primary)}/>
-            <div className={`absolute w-full flex ${dydx > 0 ? "-scale-x-100 -left-2 -translate-x-full" : "-right-2 translate-x-full"}`} style={{top: barHeight*2/3}}>
-                {offhandInventoryIcons.map(icon => <img className="invert px-0.5 opacity-80" style={{height: barHeight/3}} src={icon}/>)}
+
+
+            <img className={`invert opacity-80 drop-shadow-lg absolute ${dydx > 0 ? "-scale-x-100 left-0 -translate-x-full" : "right-0 translate-x-full"}`} style={{ height: barHeight * 2 / 3 }} src={weaponToIcon(primary)} />
+            <div className={`absolute w-full flex ${dydx > 0 ? "-scale-x-100 -left-2 -translate-x-full" : "-right-2 translate-x-full"}`} style={{ top: barHeight * 2 / 3 }}>
+                {offhandInventoryIcons.map(icon => <img className="invert px-0.5 opacity-80" style={{ height: barHeight / 3 }} src={icon} />)}
             </div>
-            <div className={`text-white py-2 grid grid-cols-1 flex-col items-stretch absolute ${dydx > 0 ? "left-6" : "right-6 justify-items-end"}`} style={{height: barHeight}}>
-                <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{marginLeft: Math.abs(dydx*barHeight*3/4), marginRight:Math.abs(dydx*barHeight*3/4)}}>
+
+            {player.state.health === 0 ? 
+            <div
+                className={`absolute flex items-center ${dydx > 0 ? "-translate-x-full -left-3" : "translate-x-full -right-3"}`}
+                style={{ height: barHeight }}
+            >
+                <img
+                    className={`brightness-50`} style={{ height: barHeight * 0.65 }} src={generalIcons["dead"]}
+                />
+            </div>
+            :
+            <HealthBar className="" style={{ position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 75, left: dydx < 0 ? undefined : 75 }} data={props.data} />
+            }
+
+            <div className={`text-white py-2 grid grid-cols-1 flex-col items-stretch absolute ${dydx > 0 ? "left-6" : "right-6 justify-items-end"}`} style={{ height: barHeight }}>
+                <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{ marginLeft: Math.abs(dydx * barHeight * 3 / 4), marginRight: Math.abs(dydx * barHeight * 3 / 4) }}>
                     <span className="text-xs mx-1.5 font-normal">K</span>{player.match_stats.kills}
                 </div>
-                <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{marginLeft: Math.abs(dydx*barHeight/2), marginRight: Math.abs(dydx*barHeight/2)}}>
+                <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{ marginLeft: Math.abs(dydx * barHeight / 2), marginRight: Math.abs(dydx * barHeight / 2) }}>
                     <span className="text-xs mx-1.5 font-normal">A</span>{player.match_stats.assists}
                 </div>
                 <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{}}>
