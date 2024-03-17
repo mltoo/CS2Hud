@@ -45,12 +45,10 @@ export function PlayerBar(props) {
     ];
     taser && offhandInventoryIcons.push(weaponToIcon(taser));
     bigGun && pistol && offhandInventoryIcons.push(weaponToIcon(pistol));
-    console.log(offhandInventoryIcons);
 
     const strokeAccentColour = player.state.health === 0 ? "stroke-gray-500" : dydx > 0 ? "stroke-southLanGreen" : "stroke-southLanPurple";
     const fillAccentColour = player.state.health === 0 ? "fill-gray-500" : dydx > 0 ? "fill-southLanGreen" : "fill-southLanPurple";
     const gradientBaseColour = player.state.health == 0 ? "rgb(140 140 140)" : hasBomb ? "red" : "black";
-    console.log(gradientBaseColour);
 
     return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5) - deathOffset, marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5) - deathOffset, marginBottom: barPadding, height: barHeight, width: totalBarLength, transform: `translate(-400,0)` }} className={player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}>
         <svg
@@ -123,8 +121,26 @@ export function PlayerBar(props) {
                     <span className={`text-xs ${dydx > 0 ? "pl-3.5 mr-1.5" : "pr-3.5 ml-1.5"} font-normal`}>D</span>{player.match_stats.deaths}
                 </div>
             </div>
+            <div
+                className={(dydx > 0 ? "text-left pl-[5.5rem]" : "text-right right-0 pr-[5.5rem] flex-row-reverse") + " absolute text-base flex items-center font-bold text-green-400 z-20"}
+                style={{ height: barHeight }}
+            >
+                ${player.state.money}
+                {player.state.defusekit && 
+                    <div
+                        className='bg-blue-500 w-[1em] h-[1em] mx-1'
+                        style={{ WebkitMask: `url(${generalIcons['defuse']}) no-repeat center`, mask: `url(${generalIcons['defuse']}) no-repeat center` }}
+                    />
+                }
+                {hasBomb && 
+                    <div
+                        className='bg-red-700 w-[1em] h-[1em] mx-1'
+                        style={{ WebkitMask: `url(${weaponIcons['c4']}) no-repeat center`, mask: `url(${weaponIcons['c4']}) no-repeat center` }}
+                    />
+                }
+            </div>
         </div>
-        <div className={(dydx > 0 ? "text-left ml-[5.5rem]" : "text-right mr-[5.5rem]") + " text-2xl mt-1.5 font-bold text-white z-20"}>{player.name}</div>
+        <div className={(dydx > 0 ? "text-left ml-[5.8rem]" : "text-right mr-[5.8rem]") + " text-xl mt-1 font-bold text-white z-20"}>{player.name}</div>
     </div>;
 }
 
