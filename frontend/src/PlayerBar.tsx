@@ -99,17 +99,17 @@ export function PlayerBar(props) {
                 {offhandInventoryIcons.map(icon => <img className="invert px-0.5 opacity-80" style={{ height: barHeight / 3 }} src={icon} />)}
             </div>
 
-            {player.state.health === 0 ? 
-            <div
-                className={`absolute flex items-center ${dydx > 0 ? "-translate-x-full -left-3" : "translate-x-full -right-3"}`}
-                style={{ height: barHeight }}
-            >
-                <img
-                    className={`brightness-50`} style={{ height: barHeight * 0.65 }} src={generalIcons["dead"]}
-                />
-            </div>
-            :
-            <HealthBar className="" style={{ position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 75, left: dydx < 0 ? undefined : 75 }} data={props.data} />
+            {player.state.health === 0 ? //PLAYER IS DEAD:
+                <div
+                    className={`absolute flex items-center ${dydx > 0 ? "-translate-x-full -left-3" : "translate-x-full -right-3"}`}
+                    style={{ height: barHeight }}
+                >
+                    <img
+                        className={`brightness-50`} style={{ height: barHeight * 0.65 }} src={generalIcons["dead"]}
+                    />
+                </div>
+                : //PLAYER IS ALIVE
+                <HealthBar className="" style={{ position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 75, left: dydx < 0 ? undefined : 75 }} data={props.data} />
             }
 
             <div className={`text-white py-2 grid grid-cols-1 flex-col items-stretch absolute ${dydx > 0 ? "left-6" : "right-6 justify-items-end"}`} style={{ height: barHeight }}>
