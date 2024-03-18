@@ -22,7 +22,7 @@ export function HealthBar(props) {
 
     let segments: ReactNode[] = []
     for (let i = 0; i < numSegments; i++) {
-        segments.push(<Segment index={i} />);
+        segments.push(<Segment key={i} index={i} />);
     }
     return <div className={props.className} style={{ width: barLength, ...props.style }}>
         <svg

@@ -48,7 +48,11 @@ export function PlayerBar(props) {
 
     const strokeAccentColour = player.state.health === 0 ? "stroke-gray-500" : dydx > 0 ? "stroke-southLanGreen" : "stroke-southLanPurple";
     const fillAccentColour = player.state.health === 0 ? "fill-gray-500" : dydx > 0 ? "fill-southLanGreen" : "fill-southLanPurple";
-    const gradientBaseColour = player.state.health == 0 ? "rgb(140 140 140)" : hasBomb ? "red" : "black";
+    const gradientBaseColour = player.state.health == 0 ? "rgb(140 140 140)" : "rgb(40,40,40)";
+    const roundDamage = (props.roundDamage[player.steamid] as { [round: number]: number })
+    const adr = Object.keys(roundDamage)
+        .filter(k => k < props.round + (props.roundPhase != "freezetime" ? 1 : 0))
+        .reduce((acc, k) => acc += roundDamage[k], 0) / (props.round + (props.roundPhase != "freezetime" ? 1 : 0));
 
     return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5) - deathOffset, marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5) - deathOffset, marginBottom: barPadding, height: barHeight, width: totalBarLength, transform: `translate(-400,0)` }} className={player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}>
         <svg
@@ -94,7 +98,7 @@ export function PlayerBar(props) {
 
             <img className={`invert opacity-80 drop-shadow-lg absolute ${dydx > 0 ? "-scale-x-100 left-0 -translate-x-full" : "right-0 translate-x-full"}`} style={{ height: barHeight * 2 / 3 }} src={weaponToIcon(primary)} />
             <div className={`absolute w-full flex ${dydx > 0 ? "-scale-x-100 -left-2 -translate-x-full" : "-right-2 translate-x-full"}`} style={{ top: barHeight * 2 / 3 }}>
-                {offhandInventoryIcons.map(icon => <img className="invert px-0.5 opacity-80" style={{ height: barHeight / 3 }} src={icon} />)}
+                {offhandInventoryIcons.map(icon => <img key={icon} className="invert px-0.5 opacity-80" style={{ height: barHeight / 3 }} src={icon} />)}
             </div>
 
             {player.state.health === 0 ? //PLAYER IS DEAD:
@@ -126,19 +130,22 @@ export function PlayerBar(props) {
                 style={{ height: barHeight }}
             >
                 ${player.state.money}
-                {player.state.defusekit && 
+                {player.state.defusekit &&
                     <div
                         className='bg-blue-500 w-[1em] h-[1em] mx-1'
                         style={{ WebkitMask: `url(${generalIcons['defuse']}) no-repeat center`, mask: `url(${generalIcons['defuse']}) no-repeat center` }}
                     />
                 }
-                {hasBomb && 
+                {hasBomb &&
                     <div
                         className='bg-red-700 w-[1em] h-[1em] mx-1'
                         style={{ WebkitMask: `url(${weaponIcons['c4']}) no-repeat center`, mask: `url(${weaponIcons['c4']}) no-repeat center` }}
                     />
                 }
             </div>
+            {player.state.health === 0 &&
+                <div className={`absolute ${dydx > 0 ? "text-left pl-[5.5rem]" : "text-right right-0 pr-[5.5rem] flex-row-reverse"}`}>ADR: {adr}</div>
+            }
         </div>
         <div className={(dydx > 0 ? "text-left ml-[5.8rem]" : "text-right mr-[5.8rem]") + " text-xl mt-1 font-bold text-white z-20"}>{player.name}</div>
     </div>;

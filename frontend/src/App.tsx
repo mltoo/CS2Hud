@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { TopDevice } from './TopDevice';
 import { io } from "socket.io-client";
 import { PlayerStats } from './PlayerStats';
@@ -40,10 +40,16 @@ export function App() {
         cts = Object.values(allPlayerData).filter((player) => player.team == "CT");
     }
     //console.log(ts);
-    //console.log(cts);
+    console.log(gsiData);
     return <React.Fragment>
-        <TopDevice data={gsiData["map"]} phaseCountdowns={gsiData["phase_countdowns"]}/>
-        <PlayerStats data={gsiData["allplayers"]}/>
+        {"allplayers" in gsiData &&
+            <React.Fragment>
+                <TopDevice data={gsiData["map"]} phaseCountdowns={gsiData["phase_countdowns"]} />
+                {"extradata" in gsiData && "mapDamage" in (gsiData["extradata"] as object) &&
+                    <PlayerStats data={gsiData["allplayers"]} round={gsiData["map"]["round"]} roundPhase={gsiData["round"]["phase"]} roundDamage={(gsiData["extradata"] as object)["mapDamage"][gsiData["map"]["name"]]} />
+                }
+            </React.Fragment>
+        }
         {/*<div className="flex w-screen justify-between content-center px-5 absolute bottom-20">
             <div>
                 {ts.map((player: any) =>
