@@ -5,7 +5,9 @@ import * as weaponIcons from "url:../res/weapons/*.svg";
 import * as generalIcons from "url:../res/icons/*.svg";
 
 export function PlayerBar(props) {
+    const [currentHealth, setCurrentHealth] = React.useState(100);
     const player = props.data;
+    props.roundPhase !== 'freezetime' && player.state.health != currentHealth && setCurrentHealth(player.state.health);
     const dydx = 0.37388513540873675 * (player.observer_slot >= 5 ? 1 : -1);
     const dxdy = 1 / dydx;
     const barHeight = 80;
@@ -111,7 +113,7 @@ export function PlayerBar(props) {
                     />
                 </div>
                 : //PLAYER IS ALIVE
-                <HealthBar className="" style={{ position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 75, left: dydx < 0 ? undefined : 75 }} data={props.data} />
+                <HealthBar className={`transition-opacity duration-500 ${props.roundPhase === 'freezetime' ? 'opacity-0' : ''}`} style={{ position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 75, left: dydx < 0 ? undefined : 75 }} health={currentHealth} data={props.data} />
             }
 
             <div className={`text-white py-2 grid grid-cols-1 flex-col items-stretch absolute ${dydx > 0 ? "left-6" : "right-6 justify-items-end"}`} style={{ height: barHeight }}>
@@ -143,8 +145,15 @@ export function PlayerBar(props) {
                     />
                 }
             </div>
-            {player.state.health === 0 &&
-                <div className={`absolute ${dydx > 0 ? "text-left pl-[5.5rem]" : "text-right right-0 pr-[5.5rem] flex-row-reverse"}`}>ADR: {adr}</div>
+            {
+                <div
+                    className={`absolute text-white flex bottom-2 transition-opacity duration-500
+                    ${player.state.health === 0 || props.roundPhase === 'freezetime' ? '' : 'opacity-0'} 
+                    ${dydx > 0 ? "text-left pl-[5.0rem]" : "text-right right-0 pr-[5.0rem] flex-row-reverse"}`}
+                >
+                    <span className='mx-1 text-xs self-end pb-[.15rem]'>ADR</span>
+                    <span className='text-bold self-end font-bold'>{Math.round(adr*10)/10}</span>
+                </div>
             }
         </div>
         <div className={(dydx > 0 ? "text-left ml-[5.8rem]" : "text-right mr-[5.8rem]") + " text-xl mt-1 font-bold text-white z-20"}>{player.name}</div>

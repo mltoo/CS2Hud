@@ -13,9 +13,9 @@ export function HealthBar(props) {
 
     function Segment(segProps) {
         const fullHealth = 100 / numSegments;
-        const length = Math.max(0, (Math.min(fullHealth, player.state.health - segProps.index * fullHealth) / (fullHealth))) * segmentLength;
+        const length = Math.max(0, (Math.min(fullHealth, props.health - segProps.index * fullHealth) / (fullHealth))) * segmentLength;
         return <path
-            className={player.state.health < 25 ? "fill-red-600" : dydx > 0 ? 'fill-southLanGreen' : 'fill-southLanPurple'}
+            className={props.health < 25 ? "fill-red-600" : dydx > 0 ? 'fill-southLanGreen' : 'fill-southLanPurple'}
             d={"m " + segProps.index * (segmentLength + segmentPadding) * Math.sign(dydx) + " ,0 " + dydx * barHeight + "," + -barHeight + " h " + length * Math.sign(dydx) + " l " + -dydx * barHeight + "," + barHeight + " Z"}
         />;
     }
@@ -26,26 +26,26 @@ export function HealthBar(props) {
     }
     return <div className={props.className} style={{ width: barLength, ...props.style }}>
         <svg
-            className={`absolute bottom-0 ${dydx < 0 && "fill-white"}`}
+            className={`absolute bottom-0 ${props.health < 100 / numSegments || dydx < 0 ? 'fill-white' : 'fill-black'}`}
             height={barHeight}
             viewBox={(dydx > 0 ? 0 : -barLength) + " " + -barHeight + " " + barLength + " " + barHeight}>
             <g id="layer1">
                 {segments}
                 <image
-                    x={player.state.health >= 100 / numSegments ? Math.sign(dydx) * 10 : Math.sign(dydx) * (10 + player.state.health / 100 * segmentLength * numSegments)}
+                    x={props.health >= 100 / numSegments ? Math.sign(dydx) * 10 : Math.sign(dydx) * (10 + props.health / 100 * segmentLength * numSegments)}
                     y={-barHeight / 2}
                     className={`${dydx > 0 ? 'brightness-0' : 'brightness-100'}`}
                     style={{ height: barHeight * 0.6, width: barHeight * 0.6, transform: `translate(${dydx > 0 ? 0 : -barHeight * 0.6}px, ${-barHeight * 0.3}px)` }}
                     xlinkHref={player.state.helmet ? generalIcons['armor-helmet'] : player.state.armor > 0 ? generalIcons['armor'] : generalIcons['health']}
                 />
                 <text
-                    className={`font-bold ${player.state.health < 100 / numSegments || dydx < 0 ? 'fill-white' : 'fill-black'}`}
+                    className={`font-bold ${props.health < 100 / numSegments || dydx < 0 ? 'fill-white' : 'fill-black'}`}
                     dominantBaseline="central"
                     textAnchor={`${dydx > 0 ? 'start' : 'end'}`}
-                    x={player.state.health >= 100 / numSegments ? Math.sign(dydx)*(14 + barHeight*0.6) : Math.sign(dydx) * (14 + barHeight*0.6 + player.state.health / 100 * segmentLength * numSegments)}
+                    x={props.health >= 100 / numSegments ? Math.sign(dydx)*(14 + barHeight*0.6) : Math.sign(dydx) * (14 + barHeight*0.6 + props.health / 100 * segmentLength * numSegments)}
                     y={-barHeight / 2}
                 >
-                    {player.state.health}
+                    {props.health}
                 </text>
             </g>
         </svg>
