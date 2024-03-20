@@ -56,7 +56,7 @@ export function PlayerBar(props) {
         .filter(k => k < props.round + (props.roundPhase != "freezetime" ? 1 : 0))
         .reduce((acc, k) => acc += roundDamage[k], 0) / (props.round + (props.roundPhase != "freezetime" ? 1 : 0));
 
-    return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5) - deathOffset, marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5) - deathOffset, marginBottom: barPadding, height: barHeight, width: totalBarLength, transform: `translate(-400,0)` }} className={player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}>
+    return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5), marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5), marginBottom: barPadding, height: barHeight, width: totalBarLength, transform: `translate(${Math.sign(dydx)*deathOffset}px,0)` }} className={`transition-transform ${player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}`}>
         <svg
             className='absolute -z-10'
             height={barHeight}
