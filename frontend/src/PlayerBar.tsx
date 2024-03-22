@@ -15,6 +15,7 @@ export function PlayerBar(props) {
     const barLength = 350;
     const deathOffset = player.state.health === 0 ? 100 : 0;
     const totalBarLength = barLength + Math.abs(dydx * barHeight);
+    const isCT = player.team === 'CT';
     let bigGun: any = undefined;
     let pistol: any = undefined;
     let knife: any = undefined;
@@ -48,8 +49,8 @@ export function PlayerBar(props) {
     taser && offhandInventoryIcons.push(weaponToIcon(taser));
     bigGun && pistol && offhandInventoryIcons.push(weaponToIcon(pistol));
 
-    const strokeAccentColour = player.state.health === 0 ? "stroke-gray-500" : dydx > 0 ? "stroke-southLanGreen" : "stroke-southLanPurple";
-    const fillAccentColour = player.state.health === 0 ? "fill-gray-500" : dydx > 0 ? "fill-southLanGreen" : "fill-southLanPurple";
+    const strokeAccentColour = player.state.health === 0 ? "stroke-gray-500" : !isCT ? "stroke-southLanGreen" : "stroke-southLanPurple";
+    const fillAccentColour = player.state.health === 0 ? "fill-gray-500" : !isCT ? "fill-southLanGreen" : "fill-southLanPurple";
     const gradientBaseColour = player.state.health == 0 ? "rgb(140 140 140)" : "rgb(40,40,40)";
     const roundDamage = (props.roundDamage[player.steamid] as { [round: number]: number })
     const adr = Object.keys(roundDamage)

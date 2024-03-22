@@ -3,7 +3,7 @@ import { TopDevice } from './TopDevice';
 import { io } from "socket.io-client";
 import { PlayerStats } from './PlayerStats';
 import { CentreDevice } from './CentreDevice';
-const socket = io("http://localhost:42069");
+const socket = io("http://localhost:12345");
 
 export function App() {
     const [gsiData, setGSIData] = React.useState({} as Object);
@@ -39,12 +39,14 @@ export function App() {
         ts = Object.values(allPlayerData).filter((player) => player.team == "T");
         cts = Object.values(allPlayerData).filter((player) => player.team == "CT");
     }
+    const ctsOnLeft = ts.length > 0 && ts[0]['observer_slot'] > 4;
+
     //console.log(ts);
 //    console.log(gsiData);
     return <React.Fragment>
         {"allplayers" in gsiData &&
             <React.Fragment>
-                <TopDevice data={gsiData["map"]} phaseCountdowns={gsiData["phase_countdowns"]} />
+                <TopDevice data={gsiData["map"]} phaseCountdowns={gsiData["phase_countdowns"]} ctsOnLeft={ctsOnLeft}/>
                 {"extradata" in gsiData && "mapDamage" in (gsiData["extradata"] as object) &&
                     <PlayerStats data={gsiData["allplayers"]} round={gsiData["map"]["round"]} roundPhase={gsiData["round"]["phase"]} roundDamage={(gsiData["extradata"] as object)["mapDamage"][gsiData["map"]["name"]]} />
                 }
