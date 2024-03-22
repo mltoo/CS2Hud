@@ -34,7 +34,7 @@ export function HealthBar(props) {
                 <image
                     x={props.health >= 100 / numSegments ? Math.sign(dydx) * 10 : Math.sign(dydx) * (10 + props.health / 100 * segmentLength * numSegments)}
                     y={-barHeight / 2}
-                    className={`${dydx > 0 ? 'brightness-0' : 'brightness-100'}`}
+                    className={`${dydx > 0 && props.health > 100 / numSegments ? 'brightness-0' : 'brightness-100'}`}
                     style={{ height: barHeight * 0.6, width: barHeight * 0.6, transform: `translate(${dydx > 0 ? 0 : -barHeight * 0.6}px, ${-barHeight * 0.3}px)` }}
                     xlinkHref={player.state.helmet ? generalIcons['armor-helmet'] : player.state.armor > 0 ? generalIcons['armor'] : generalIcons['health']}
                 />

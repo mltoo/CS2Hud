@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { TopDevice } from './TopDevice';
 import { io } from "socket.io-client";
 import { PlayerStats } from './PlayerStats';
+import { CentreDevice } from './CentreDevice';
 const socket = io("http://localhost:42069");
 
 export function App() {
@@ -18,7 +19,6 @@ export function App() {
 
         function onEvent(value) {
             //console.log("VALUE RECEIVED str: " + value);
-            console.log(JSON.parse(value));
             setGSIData(JSON.parse(value));
         }
         socket.on('connect', onConnect);
@@ -49,6 +49,9 @@ export function App() {
                     <PlayerStats data={gsiData["allplayers"]} round={gsiData["map"]["round"]} roundPhase={gsiData["round"]["phase"]} roundDamage={(gsiData["extradata"] as object)["mapDamage"][gsiData["map"]["name"]]} />
                 }
             </React.Fragment>
+        }
+        {"player" in gsiData && "allplayers" in gsiData && 
+            <CentreDevice data={(gsiData['allplayers'] as object)[(gsiData['player'] as object)['steamid']]} roundPhase={gsiData["round"]["phase"]} roundDamage={(gsiData["extradata"] as object)["mapDamage"][gsiData["map"]["name"]]}/>
         }
         {/*<div className="flex w-screen justify-between content-center px-5 absolute bottom-20">
             <div>

@@ -92,7 +92,7 @@ export function PlayerBar(props) {
                     r="12"
                     className={`stroke-[5px] ${strokeAccentColour} fill-black`}
                 />
-                <text x={(barHeight / 2) * dydx + 6 * Math.sign(dydx)} y={barHeight / 2} textAnchor='middle' dominantBaseline='middle' className='font-black translate-y-[1.5px] fill-white'>{player.observer_slot}</text>
+                <text x={(barHeight / 2) * dydx + 6 * Math.sign(dydx)} y={barHeight / 2} textAnchor='middle' dominantBaseline='middle' className='font-black translate-y-[1.5px] fill-white'>{player.observer_slot + 1}</text>
             </g>
         </svg>
         <div className="absolute" style={{ height: barHeight, width: totalBarLength }}>
