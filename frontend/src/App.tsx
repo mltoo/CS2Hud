@@ -40,7 +40,7 @@ export function App() {
         cts = Object.values(allPlayerData).filter((player) => player.team == "CT");
     }
     //console.log(ts);
-    console.log(gsiData);
+//    console.log(gsiData);
     return <React.Fragment>
         {"allplayers" in gsiData &&
             <React.Fragment>

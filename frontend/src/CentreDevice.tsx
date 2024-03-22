@@ -31,8 +31,6 @@ export function CentreDevice(props) {
     function weaponToIcon(weapon) {
         return weapon && weaponIcons[weapon.name.replace("weapon_", "")];
     }
-    console.log(weaponToIcon(primary));
-    console.log(player.state.health / 100);
 
     const boxSizing = "w-60 h-36"
     return <div className="fixed bottom-10 left-1/2 -translate-x-1/2">

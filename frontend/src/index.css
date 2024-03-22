@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes bombColor {
+    0% {fill: black;}
+    50% {fill: red;}
+    100% {fill: black;}
+};
+
+.bombAnim {
+    animation: bombColor infinite;
+}
