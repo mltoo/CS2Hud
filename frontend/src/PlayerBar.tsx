@@ -48,16 +48,16 @@ export function PlayerBar(props) {
     ];
     taser && offhandInventoryIcons.push(weaponToIcon(taser));
     bigGun && pistol && offhandInventoryIcons.push(weaponToIcon(pistol));
-
+    
     const strokeAccentColour = player.state.health === 0 ? "stroke-gray-500" : !isCT ? "stroke-southLanGreen" : "stroke-southLanPurple";
     const fillAccentColour = player.state.health === 0 ? "fill-gray-500" : !isCT ? "fill-southLanGreen" : "fill-southLanPurple";
-    const gradientBaseColour = player.state.health == 0 ? "rgb(140 140 140)" : "rgb(40,40,40)";
+    const gradientBaseColour = player.state.health == 0 ? "rgb(140 140 140)" : props.isSpecced ? "rgb(200,200,200)" : "rgb(40,40,40)";
     const roundDamage = (props.roundDamage[player.steamid] as { [round: number]: number })
     const adr = Object.keys(roundDamage)
         .filter(k => k < props.round + (props.roundPhase != "freezetime" ? 1 : 0))
         .reduce((acc, k) => acc += roundDamage[k], 0) / Math.max(1,(props.round + (props.roundPhase != "freezetime" ? 1 : 0)));
 
-    return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5), marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5), marginBottom: barPadding, height: barHeight, width: totalBarLength, transform: `translate(${Math.sign(dydx)*deathOffset}px,0)` }} className={`transition-transform ${player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}`}>
+    return <div style={{ marginLeft: (barHeight + barPadding) * Math.abs(dydx) * (player.observer_slot % 5), marginRight: (barHeight + barPadding) * dydx * (player.observer_slot % 5), marginBottom: barPadding, height: barHeight, width: totalBarLength, transform: `translate(${Math.sign(dydx)*deathOffset}px,0)` }} className={`${props.isSpecced ? 'text-black' : 'text-white'} transition-transform ${player.observer_slot >= 5 ? "justify-self-end" : "justify-self-start"}`}>
         <svg
             className='absolute -z-10'
             height={barHeight}
@@ -66,7 +66,7 @@ export function PlayerBar(props) {
             <defs id="defs1">
                 <linearGradient id={"playerbar-grad" + player.observer_slot}>
                     <stop stopColor={gradientBaseColour} stopOpacity={dydx > 0 ? 100 : 0} offset="0%" />
-                    <stop stopColor={gradientBaseColour} stopOpacity={dydx > 0 ? 0 : 100} offset="100%" />
+                    <stop className='transition' stopColor={gradientBaseColour} stopOpacity={dydx > 0 ? 0 : 100} offset="100%" />
                 </linearGradient>
             </defs>
             <g id="layer1">
@@ -117,7 +117,7 @@ export function PlayerBar(props) {
                 <HealthBar className={`transition-opacity duration-500 ${props.roundPhase === 'freezetime' ? 'opacity-0' : ''}`} style={{ position: "absolute", bottom: 10, right: dydx > 0 ? undefined : 75, left: dydx < 0 ? undefined : 75 }} health={currentHealth} data={props.data} />
             }
 
-            <div className={`text-white py-2 grid grid-cols-1 flex-col items-stretch absolute ${dydx > 0 ? "left-6" : "right-6 justify-items-end"}`} style={{ height: barHeight }}>
+            <div className={`${props.isSpecced ? 'text-black' : 'text-white'} py-2 grid grid-cols-1 flex-col items-stretch absolute ${dydx > 0 ? "left-6" : "right-6 justify-items-end"}`} style={{ height: barHeight }}>
                 <div className={`w-12 h-0 font-bold flex items-baseline ${dydx > 0 ? '' : 'flex-row-reverse'}`} style={{ marginLeft: Math.abs(dydx * barHeight * 3 / 4), marginRight: Math.abs(dydx * barHeight * 3 / 4) }}>
                     <span className="text-xs mx-1.5 font-normal">K</span>{player.match_stats.kills}
                 </div>
@@ -129,7 +129,7 @@ export function PlayerBar(props) {
                 </div>
             </div>
             <div
-                className={(dydx > 0 ? "text-left pl-[5.5rem]" : "text-right right-0 pr-[5.5rem] flex-row-reverse") + " absolute text-base flex items-center font-bold text-green-400 z-20"}
+                className={(dydx > 0 ? "text-left pl-[5.5rem]" : "text-right right-0 pr-[5.5rem] flex-row-reverse") + " absolute text-base flex items-center font-bold text-green-600 z-20"}
                 style={{ height: barHeight }}
             >
                 ${player.state.money}
@@ -148,7 +148,7 @@ export function PlayerBar(props) {
             </div>
             {
                 <div
-                    className={`absolute text-white flex bottom-2 transition-opacity duration-500
+                    className={`absolute ${props.isSpecced ? 'text-black' : 'text-white'} flex bottom-2 transition-opacity duration-500
                     ${player.state.health === 0 || props.roundPhase === 'freezetime' ? '' : 'opacity-0'} 
                     ${dydx > 0 ? "text-left pl-[5.0rem]" : "text-right right-0 pr-[5.0rem] flex-row-reverse"}`}
                 >
@@ -157,7 +157,7 @@ export function PlayerBar(props) {
                 </div>
             }
         </div>
-        <div className={(dydx > 0 ? "text-left ml-[5.8rem]" : "text-right mr-[5.8rem]") + " text-xl mt-1 font-bold text-white z-20"}>{player.name}</div>
+        <div className={(dydx > 0 ? "text-left ml-[5.8rem]" : "text-right mr-[5.8rem]") + ` text-xl mt-1 font-bold ${ props.isSpecced ? 'text-black' : 'text-white'} z-20`}>{player.name}</div>
     </div>;
 }
 

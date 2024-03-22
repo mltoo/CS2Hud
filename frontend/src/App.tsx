@@ -48,7 +48,7 @@ export function App() {
             <React.Fragment>
                 <TopDevice data={gsiData["map"]} phaseCountdowns={gsiData["phase_countdowns"]} ctsOnLeft={ctsOnLeft}/>
                 {"extradata" in gsiData && "mapDamage" in (gsiData["extradata"] as object) &&
-                    <PlayerStats data={gsiData["allplayers"]} round={gsiData["map"]["round"]} roundPhase={gsiData["round"]["phase"]} roundDamage={(gsiData["extradata"] as object)["mapDamage"][gsiData["map"]["name"]]} />
+                    <PlayerStats data={gsiData["allplayers"]} round={gsiData["map"]["round"]} roundPhase={gsiData["round"]["phase"]} roundDamage={(gsiData["extradata"] as object)["mapDamage"][gsiData["map"]["name"]]} currentSpec={gsiData["player"]}/>
                 }
             </React.Fragment>
         }
