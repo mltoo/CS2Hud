@@ -99,9 +99,9 @@ export function PlayerBar(props) {
         <div className="absolute" style={{ height: barHeight, width: totalBarLength }}>
 
 
-            <img className={`invert opacity-80 drop-shadow-lg absolute ${dydx > 0 ? "-scale-x-100 left-0 -translate-x-full" : "right-0 translate-x-full"}`} style={{ height: barHeight * 2 / 3 }} src={weaponToIcon(primary)} />
+            <img className={`opacity-80 drop-shadow-lg absolute ${dydx > 0 ? "-scale-x-100 left-0 -translate-x-full" : "right-0 translate-x-full"}`} style={{ height: barHeight * 2 / 3 }} src={weaponToIcon(primary)} />
             <div className={`absolute w-full flex ${dydx > 0 ? "-scale-x-100 -left-2 -translate-x-full" : "-right-2 translate-x-full"}`} style={{ top: barHeight * 2 / 3 }}>
-                {offhandInventoryIcons.map(icon => <img key={icon} className="invert px-0.5 opacity-80" style={{ height: barHeight / 3 }} src={icon} />)}
+                {offhandInventoryIcons.map(icon => <img key={icon} className="px-0.5 opacity-80" style={{ height: barHeight / 3 }} src={icon} />)}
             </div>
 
             {player.state.health === 0 ? //PLAYER IS DEAD:

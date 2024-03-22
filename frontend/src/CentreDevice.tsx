@@ -67,8 +67,8 @@ export function CentreDevice(props) {
             </div>
             <div className='flex flex-col ml-3.5'>
                 {player.state.health > 0 && <React.Fragment>
-                <div className={`w-56 h-24 ${isCT ? 'bg-southLanPurple' : 'bg-southLanGreen'} brightness-75 opacity-80`} style={{ WebkitMask: `url(${weaponToIcon(primary)}) no-repeat 0% 50%`, mask: `url(${weaponToIcon(primary)}) no-repeat 0% 50%` }} />
-                <div className={`flex flex-row items-baseline ${isCT ? 'text-southLanPurple' : 'text-southLanGreen'} brightness-75 opacity-90`}>
+                <div className={`w-56 h-24 fill-white brightness-75 opacity-80`} style={{ WebkitMask: `url(${weaponToIcon(primary)}) no-repeat 0% 50%`, mask: `url(${weaponToIcon(primary)}) no-repeat 0% 50%` }} />
+                <div className={`flex flex-row items-baseline text-white brightness-75 opacity-90`}>
                     <span className='font-bold text-3xl'>30</span>
                     <span className='pl-1 text-xl'>120</span>
                 </div>
