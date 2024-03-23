@@ -14,7 +14,7 @@ export function PlayerStats(props) {
 
 
     return <div className="grid grid-cols-2 grid-rows-5 w-screen absolute bottom-0 overflow-clip">
-        {arrangedPlayers.map((player: any) => player['name'] ? <PlayerBar key={player.observer_slot} data={player} round={props.round} roundPhase={props.roundPhase} roundDamage={props.roundDamage} isSpecced={props.currentSpec['steamid'] === player['steamid']}/> : <div/>)
+        {arrangedPlayers.map((player: any) => player['name'] ? <PlayerBar key={player.observer_slot} data={player} round={props.round} roundPhase={props.roundPhase} roundDamage={props.roundDamage} isSpecced={props.currentSpec && props.currentSpec['steamid'] === player['steamid']}/> : <div/>)
         }
     </div>
 }
