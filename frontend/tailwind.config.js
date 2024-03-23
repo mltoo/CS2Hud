@@ -8,7 +8,7 @@ module.exports = {
                 'sans': ['"Montserrat"', ...defaultTheme.fontFamily.sans]
             },
             colors: {
-                'southLanPurple': '#621D75',
+                'southLanPurple': '#882DA8',
                 'southLanGreen': '#CFFF06',
                 ...defaultTheme.colors
             },
