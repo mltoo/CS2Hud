@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PlayerBar } from './PlayerBar';
+import { SponsorBlock } from './SponsorBlock';
 
 export function PlayerStats(props) {
     const players: object[] = (Object.keys(props.data ?? {} as object) as string[]).map(steamID => { return { 'steamid': steamID, ...props.data[steamID] } })
@@ -14,6 +15,7 @@ export function PlayerStats(props) {
 
 
     return <div className="grid grid-cols-2 grid-rows-5 w-screen absolute bottom-0 overflow-clip">
+        <div/><SponsorBlock/>
         {arrangedPlayers.map((player: any) => player['name'] ? <PlayerBar key={player.observer_slot} data={player} round={props.round} roundPhase={props.roundPhase} roundDamage={props.roundDamage} isSpecced={props.currentSpec && props.currentSpec['steamid'] === player['steamid']}/> : <div/>)
         }
     </div>
