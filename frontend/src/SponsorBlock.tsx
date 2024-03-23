@@ -9,27 +9,36 @@ export function SponsorBlock(props) {
     const barHeight = 80;
     const barLength = 300
     const dydx = -0.37388513540873675;
-    const [activeLogo, setActiveLogo] = useState('monster');
+    const [index, setIndex] = useState(0);
+    const [activeLogoIndex, setActiveLogoIndex] = useState(0);
+    React.useEffect(() => {
+    const timerId = setInterval(
+      () => setIndex((i) => (i + 1) % 3), // <-- increment index
+      2000
+    );
+    return () => clearInterval(timerId);
+  }, []);
 
-    useEffect(()=>{
-        const interval = setInterval(()=>{
-            switch(activeLogo) {
-                case 'monster':
-                    setActiveLogo('intel');
-                    break;
-                case 'intel':
-                    setActiveLogo('nse');
-                    break;
-                case 'nse':
-                    setActiveLogo('ue');
-                    break;
-                case 'ue':
-                    setActiveLogo('intel');
-                    break;
-            }
-        }, 2000);
-    }, [activeLogo])
-
+  React.useEffect(() => {
+    setActiveLogoIndex(index); // <-- update media state when index updates
+  }, [index]);
+    console.log(activeLogoIndex);
+    let activeLogo = 'monster';
+    console.log(index);
+    switch(index) {
+        case 0:
+        activeLogo = 'monster';
+        break;
+        case 1: 
+        activeLogo = 'intel';
+        break;
+        case 2:
+        activeLogo = 'nse';
+        break;
+        case 3:
+        activeLogo = 'ue';
+        break;
+    }
     return <div className='justify-self-end' style={{width:`${barLength}px`, height: `${barHeight}px`}} >
         <svg
             className='absolute -z-10'
