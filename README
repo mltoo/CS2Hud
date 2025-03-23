@@ -1,0 +1,15 @@
+WARNING: This was thrown together fairly quickly for fun, and as such is not the best/most reliable/most maintainable code, there are quite a few bits where it will need to be restarted (hopefully not during a match) or messed around with to get to work.
+Do NOT under any circumstances expose either component of this to the open internet - both accept whatever input they are given and were made with absolutely no regard for security at all.
+It should hopefully work reasonably well for reasonably normal CS games, but if you are looking for a pro esports grade HUD I'm afraid this is not that (look at @drweissbrot's one maybe).
+
+Starting the program:
+
+Because CS acts as an HTTP client, not a server for its game state integration API, it is necessary to have a separate component running outside the browser to accept the data from CS and forward it to the webapp frontend (i.e. the UI).
+In this program this takes the form of a very simple (python) FastAPI server.
+To start this, install the requirements.txt in the GSIRelay directory with pip, then start it up with 'uvicorn --port <whatever port> server:app'
+
+To start the front-end server, cd into the 'frontend' directory, npm install the dependencies, then you can start a simple webserver with npx parcel, and add this in to your OBS (you may need to adjust the port in App.tsx to match what you set when starting the backend).
+This will start a server in development mode, meaning that if theres an error (which as I say above is not particularly uncommon) it will show a big error message on the broadcast, so it may be desirable to do an 'npx parcel build'  to build a development release.
+The reason you might not want to do this is that if something goes catastrophically wrong (classics include the team names going wrong, names not fitting the boxes, etc.) in debug mode you can edit the code live and have it do a hot reload.
+
+With thanks to @drweissbrot's 'cs-hud' (https://github.com/drweissbrot/cs-hud), from which the icons for this project were sourced.
