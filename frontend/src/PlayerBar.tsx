@@ -133,7 +133,7 @@ export function PlayerBar(props) {
                 style={{ height: barHeight }}
             >
                 ${player.state.money}
-                <div className={`${!props.isSpecced ? 'bg-black': 'bg-white'} h-2 w-2`} style={{mask: `url(${generalIcons['round-kills']}) center no-repeat` }}/>
+                {/*<div className={`${!props.isSpecced ? 'bg-black': 'bg-white'} h-2 w-2`} style={{mask: `url(${generalIcons['round-kills']}) center no-repeat` }}/>*/}
                 {player.state.defusekit &&
                     <div
                         className='bg-blue-500 w-[1em] h-[1em] mx-1'

@@ -40,13 +40,13 @@ export function App() {
         cts = Object.values(allPlayerData).filter((player) => player.team == "CT");
     }
     const ctsOnLeft = ts.length > 0 && ts[0]['observer_slot'] > 4;
+    const teamsSwapped = gsiData["map"]?.round >= 12 || (gsiData["map"] - 23) % 6 <= 2;
 
-    //console.log(ts);
-//    console.log(gsiData);
+
     return <React.Fragment>
         {"allplayers" in gsiData &&
             <React.Fragment>
-                <TopDevice data={gsiData["map"]} phaseCountdowns={gsiData["phase_countdowns"]} ctsOnLeft={ctsOnLeft}/>
+                <TopDevice data={gsiData["map"]} phaseCountdowns={gsiData["phase_countdowns"]} ctsOnLeft={ctsOnLeft} teamsSwapped={teamsSwapped}/>
                 {"extradata" in gsiData && "mapDamage" in (gsiData["extradata"] as object) &&
                     <PlayerStats data={gsiData["allplayers"]} round={gsiData["map"]["round"]} roundPhase={gsiData["round"]["phase"]} roundDamage={(gsiData["extradata"] as object)["mapDamage"][gsiData["map"]["name"]]} currentSpec={gsiData["player"]}/>
                 }

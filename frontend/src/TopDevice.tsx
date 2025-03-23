@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from 'url:../res/logo.svg';
+//import logo from 'url:../res/logo.svg';
 import * as weaponIcons from "url:../res/weapons/*.svg";
 import * as generalIcons from 'url:../res/icons/*.svg';
 
@@ -12,9 +12,9 @@ export function TopDevice(props) {
     let timer = "00:00";
     if (props.data) {
 
-        ctName = props.data.team_ct.name ?? ctName;
+        //ctName = props.data.team_ct.name ?? ctName;
         ctScore = props.data.team_ct.score;
-        tName = props.data.team_t.name ?? tName;
+        //tName = props.data.team_t.name ?? tName;
         tScore = props.data.team_t.score;
     }
     if (props.phaseCountdowns.phase === "bomb" && props.phaseCountdowns.phase_ends_in != lastBombTimer) {
@@ -82,9 +82,9 @@ export function TopDevice(props) {
                     d="m -8,72 36,68 h -12 l -36,-68 Z"
                     id="path1"
                 />
-                <text dominantBaseline="central" x="180" y="103" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{!props.ctsOnLeft ? ctName : tName}</text>
+                <text dominantBaseline="central" x="180" y="103" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{props.teamsSwapped ? ctName : tName}</text>
                 <text dominantBaseline="central" x="77.5" y="105" className={`font-sans font-bold text-4xl ${!props.ctsOnLeft ? 'fill-southLanPurple' : 'fill-southLanGreen'} drop-shadow-lg`}>{!props.ctsOnLeft ? ctScore : tScore}</text>
-                <text dominantBaseline="central" textAnchor="end" x="-25" y="103" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{!props.ctsOnLeft ? tName : ctName}</text>
+                <text dominantBaseline="central" textAnchor="end" x="-25" y="103" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{props.teamsSwapped ? tName : ctName}</text>
                 <text dominantBaseline="central" textAnchor="end" x="65.5" y="105" className={`font-sans font-bold text-4xl ${!props.ctsOnLeft ? 'fill-southLanGreen' : 'fill-southLanPurple'} drop-shadow-lg`}>{!props.ctsOnLeft ? tScore : ctScore}</text>
                 {!(["paused", "warmup", "bomb", "defuse"].includes(props.phaseCountdowns.phase)) &&
                     <text dominantBaseline="central" textAnchor='middle' x="71.5" y="58" className="font-sans font-bold text-5xl fill-[#ffffff] drop-shadow-lg">{timer}</text>
@@ -95,7 +95,7 @@ export function TopDevice(props) {
                 {["bomb", "defuse"].includes(props.phaseCountdowns.phase) &&
                     <image x="71.5" y="38" width="30" transform='translate(-15,0)' xlinkHref={weaponIcons['c4red']} />
                 }
-                <image x="71.5" y="8" width="80" className="" transform='translate(-40,0)' xlinkHref={logo} />
+                {/* <image x="71.5" y="8" width="80" className="" transform='translate(-40,0)' xlinkHref={logo} /> */}
             </g>
         </svg>
     </div>;
